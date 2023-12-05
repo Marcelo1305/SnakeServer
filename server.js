@@ -161,6 +161,10 @@ for (let i = 0; i < 1; i++) {
 // Configurar o loop do jogo
 setInterval(updateGame, 100);
 
+app.get("/", (req, res) => {
+    res.send("Servidor está funcionando!");
+  });
+
 // Iniciar o servidor
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
