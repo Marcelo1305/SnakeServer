@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const ip = '192.168.0.101';
+const ip = 'dull-jade-calf-wear.cyclic.app';
 const socket = new WebSocket("ws://" + ip + ":3000");
 
 socket.addEventListener("message", (event) => {
