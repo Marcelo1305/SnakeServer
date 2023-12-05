@@ -78,17 +78,3 @@ document.addEventListener("keydown", (event) => {
             break;
     }
 });
-
-// Adicione uma função para enviar a cor escolhida para o servidor
-function chooseSnakeColor(color) {
-    socket.send(JSON.stringify({ chooseColor: color }));
-}
-
-// Adicione um evento para capturar a escolha de cor do usuário (isso pode variar dependendo da sua implementação da interface)
-const colorPicker = document.getElementById("colorPicker");
-colorPicker.addEventListener("change", (event) => {
-    const chosenColor = event.target.value;
-    chooseSnakeColor(chosenColor);
-});
-
-// Note: No need to call draw() here; it will be triggered by WebSocket messages
