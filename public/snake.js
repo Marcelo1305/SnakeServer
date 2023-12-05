@@ -27,7 +27,10 @@ function draw(data) {
     // Draw food
     if (data.foods[0].x !== undefined && data.foods[0].y !== undefined) {
         ctx.fillStyle = "red";
-        ctx.fillRect(data.foods[0].x * 20, data.foods[0].y * 20, 20, 20);
+        //alert(data.foods);
+        data.foods.forEach(food => {
+            ctx.fillRect(food.x * 20, food.y * 20, 20, 20);
+        });
     }
 
     var divPontos = document.getElementById("divPontos");

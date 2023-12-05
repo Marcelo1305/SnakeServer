@@ -157,7 +157,7 @@ wss.on("connection", (ws) => {
 });
 
 // Gerar alimentos iniciais
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 3; i++) {
     foods.push(generateFood());
 }
 
