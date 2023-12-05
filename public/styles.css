@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Divisão em duas colunas */
+.container {
+    display: flex;
+    height: 100vh; /* 100% da altura da viewport */
+}
+
+/* Primeira coluna com 2 partes */
+.column-1 {
+    flex: 2; /* 2 partes de 12 no total */
+    background-color: #3c3a3a; /* Cor de fundo da primeira coluna */
+    padding: 20px;
+}
+
+/* Segunda coluna com 10 partes */
+.column-2 {
+    flex: 10; /* 10 partes de 12 no total */
+    background-color: #6f6c6c; /* Cor de fundo da segunda coluna */
+    padding: 20px;
+}
+canvas {
+    border: 1px solid #000;
+    background-color: #dfdada;
+    display: block;
+    margin: 20px auto;
+}
+label {
+    display: block; /* Colocar cada label em uma nova linha */
+    margin-bottom: 10px; /* Adicionar uma margem na parte inferior para espaçamento entre os labels */
+}
