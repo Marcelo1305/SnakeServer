@@ -26,9 +26,10 @@ function draw(data) {
 
     // Draw food
     if (data.foods[0].x !== undefined && data.foods[0].y !== undefined) {
-        ctx.fillStyle = "red";
+        //ctx.fillStyle = "red";
         //alert(data.foods);
         data.foods.forEach(food => {
+            ctx.fillStyle = food.color;
             ctx.fillRect(food.x * 20, food.y * 20, 20, 20);
         });
     }

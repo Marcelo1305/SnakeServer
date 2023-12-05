@@ -11,6 +11,7 @@ const canvasX = 1200;
 const canvasY = 800;
 let snakes = [];
 let foods = [];
+const colors = ["#0b0beb", "#e70beb", "#0beb0b", "#ebe70b", "#eb910b"];
 
 app.use(express.static('public'));
 
@@ -18,6 +19,7 @@ function generateFood() {
     return {
         x: Math.floor(Math.random() * (canvasX / BOARD_SIZE)),
         y: Math.floor(Math.random() * (canvasY / BOARD_SIZE)),
+        color: getRandomString(colors)
     };
 }
 
@@ -80,7 +82,11 @@ function updateGame() {
         // Se a cabeça da cobra colidir com um alimento, gerar novo alimento
         const foodIndex = foods.findIndex((f) => f.x === head.x && f.y === head.y);
         if (foodIndex !== -1) {
-            snake.push({ x: head.x, y: head.y }); // Adicionar um novo segmento
+            //verifica se a cor do alimento é o mesmo da snake
+            if(foods[foodIndex].color === snake[0].color){
+                
+                snake.push({ x: head.x, y: head.y }); // Adicionar um novo segmento
+            }
             foods.splice(foodIndex, 1); // Remover o alimento
             foods.push(generateFood()); // Gerar novo alimento
         }
@@ -114,7 +120,7 @@ wss.on("connection", (ws) => {
             x: Math.floor(Math.random() * (canvasX / BOARD_SIZE)),
             y: Math.floor(Math.random() * (canvasY / BOARD_SIZE)),
             direction: ["UP", "DOWN", "LEFT", "RIGHT"][Math.floor(Math.random() * 4)],
-            color: corAleatoria
+            color: getRandomString(colors)//corAleatoria
         },
     ];
     snakes.push(newSnake);
@@ -155,6 +161,15 @@ wss.on("connection", (ws) => {
         }
     });
 });
+
+//randomiza a cor da snake
+function getRandomString(array) {
+    // Gera um índice aleatório dentro dos limites do array
+    const randomIndex = Math.floor(Math.random() * array.length);
+
+    // Retorna a string correspondente ao índice gerado
+    return array[randomIndex];
+}
 
 // Gerar alimentos iniciais
 for (let i = 0; i < 3; i++) {
