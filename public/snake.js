@@ -31,6 +31,8 @@ function draw(data) {
         data.foods.forEach(food => {
             ctx.fillStyle = food.color;
             ctx.fillRect(food.x * 20, food.y * 20, 20, 20);
+            ctx.strokeStyle = "red";
+            ctx.strokeRect(food.x * 20, food.y * 20, 20, 20);
         });
     }
 
