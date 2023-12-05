@@ -1,7 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const socket = new WebSocket("wss://dull-jade-calf-wear.cyclic.app:3000/");
+const socket = new WebSocket("ws://localhost:3000/");
 
+//Recebe os dados do servidor
 socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
     if (data.gameOver) {
@@ -29,21 +30,24 @@ function draw(data) {
         ctx.fillRect(data.foods[0].x * 20, data.foods[0].y * 20, 20, 20);
     }
 
-    // Draw snakes
-    ctx.fillStyle = "green";
     var divPontos = document.getElementById("divPontos");
     divPontos.innerHTML = ""; //limpa a div 
 
-
+    // Draw snakes
     data.snakes.forEach((snake) => {
+        //Verifica se as informações estão corretas
         if (!snake || !Array.isArray(snake)) {
             console.error("Invalid snake data:", snake);
             return;
         }
+
+        //preenche os labels com os jogadores e seus pontos
         var novoLabel = document.createElement("label");
         novoLabel.style.color = snake[0].color;
         novoLabel.textContent = "Pontos: " + snake.length;
         divPontos.appendChild(novoLabel);
+
+        //Desenha as Snakes
         snake.forEach((segment) => {
             if (segment && segment.x !== undefined && segment.y !== undefined) {
                 ctx.lineWidth = 2;
@@ -57,10 +61,13 @@ function draw(data) {
         });
     });
 }
+
+//Envia a direção para o servidor
 function sendDirection(dir) {
     socket.send(JSON.stringify({ direction: dir }));
 }
 
+// Eventos de clicks
 document.addEventListener("keydown", (event) => {
     switch (event.key) {
         case "ArrowUp":

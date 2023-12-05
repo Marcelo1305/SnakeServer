@@ -111,8 +111,8 @@ wss.on("connection", (ws) => {
     var corAleatoria = "#" + componentToHex(vermelho) + componentToHex(verde) + componentToHex(azul);
     const newSnake = [
         {
-            x: Math.floor(Math.random() * (canvasX /BOARD_SIZE)),
-            y: Math.floor(Math.random() * (canvasY /BOARD_SIZE)),
+            x: Math.floor(Math.random() * (canvasX / BOARD_SIZE)),
+            y: Math.floor(Math.random() * (canvasY / BOARD_SIZE)),
             direction: ["UP", "DOWN", "LEFT", "RIGHT"][Math.floor(Math.random() * 4)],
             color: corAleatoria
         },
@@ -126,20 +126,23 @@ wss.on("connection", (ws) => {
     // Lidar com mudanças na direção
     ws.on("message", (msg) => {
         const data = JSON.parse(msg);
-        if (data.config) {
-            console.log(data.config);
-            // Atualize as configurações da cobrinha do usuário
-            newSnake[0].color = data.config;
-
-            // Envie o estado atualizado para todos os clientes
-            const gameState = { snakes, foods };
-            wss.clients.forEach((client) => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(gameState));
+        if (data.direction) {
+            if (newSnake[0].direction !== data.direction) {
+                if (newSnake[0].direction == 'UP' && data.direction === 'DOWN') {
+                    return;
                 }
-            });
-        } else if (data.direction) {
-            newSnake[0].direction = data.direction;
+                if (newSnake[0].direction == 'DOWN' && data.direction === 'UP') {
+                    return;
+                }
+                if (newSnake[0].direction == 'LEFT' && data.direction === 'RIGHT') {
+                    return;
+                }
+                if (newSnake[0].direction == 'RIGHT' && data.direction === 'LEFT') {
+                    return;
+                }
+
+                newSnake[0].direction = data.direction;
+            }
         }
     });
 
@@ -163,10 +166,10 @@ setInterval(updateGame, 100);
 
 app.get("/", (req, res) => {
     res.send("Servidor está funcionando!");
-  });
+});
 
 // Iniciar o servidor
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
